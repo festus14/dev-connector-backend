@@ -1,4 +1,7 @@
 const express = require("express");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const passport = require("passport");
 
 const users = require("./routes/apis/users");
 const profile = require("./routes/apis/profile");
@@ -6,28 +9,24 @@ const posts = require("./routes/apis/posts");
 
 const app = express();
 
-const MongoClient = require("mongodb").MongoClient;
-const uri = "mongodb://127.0.0.1/dev_connector";
-const client = new MongoClient(uri, {
-  useUnifiedTopology: true,
-  useNewUrlParser: true,
-});
-client.connect((err) => {
-  if (err) console.log(err);
-  else {
-    console.log("MongoDB Connected");
-  }
-  // const collection = client.db("test").collection("devices");
-  // perform actions on the collection object
-  client.close();
-});
+// Body Parser middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
-// @route   GET /
-// @desc    Test home route
-// @access  Public
-app.get("/", (req, res) => {
-  res.send("Hello megan");
-});
+const uri = require("./config/keys").mongoURILocal;
+mongoose
+  .connect(uri, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+  })
+  .then(() => console.log("MongoDB Connected"))
+  .catch((err) => console.log(err));
+
+// Passport Middleware
+app.use(passport.initialize());
+
+// Passport Config
+require("./config/passport")(passport);
 
 // Use Route
 app.use("/api/users", users);

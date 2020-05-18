@@ -12,8 +12,8 @@ module.exports = (data) => {
   if (!isEmpty(data.edu_id) && !Validator.isUUID(data.edu_id))
     errors.experience = "This education doesn't exists";
 
-  if (!Validator.isLength(data.school, { min: 2, max: 40 }))
-    errors.school = "School length needs to be between 2 and 40";
+  if (!Validator.isLength(data.school, { min: 2, max: 100 }))
+    errors.school = "School length needs to be between 2 and 100";
 
   if (Validator.isEmpty(data.school))
     errors.school = "School field can not be empty";

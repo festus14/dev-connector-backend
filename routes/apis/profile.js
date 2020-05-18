@@ -67,23 +67,6 @@ router.get("/all", (req, res) => {
 // @route   GET /api/profile/handle/:handle
 // @desc    Get user profile by handle
 // @access  Public
-router.get("/", (req, res) => {
-  const errors = {};
-  Profile.findOne({ handle: req.params.handle })
-    .populate("user", ["name", "email", "avatar"])
-    .then((profile) => {
-      if (!profile) {
-        errors.noProfile = "This user does not have a profile";
-        return res.status(404).json(errors);
-      }
-      return res.json(profile);
-    })
-    .catch((err) => res.status(404).json(err));
-});
-
-// @route   GET /api/profile/handle/:handle
-// @desc    Get user profile by handle
-// @access  Public
 router.get("/handle/:handle", (req, res) => {
   const errors = {};
   Profile.findOne({ handle: req.params.handle })
@@ -201,7 +184,7 @@ router.post(
 );
 
 // @route   POST /api/profile/experience
-// @desc    Add and Update experience to user profile
+// @desc    Add and Update user experience
 // @access  Private
 router.post(
   "/experience",
@@ -213,14 +196,14 @@ router.post(
     if (!isValid) return res.status(400).json(errors);
 
     const {
-      exp_id,
-      title,
-      company,
-      location,
-      from,
-      to,
-      current,
-      description,
+        exp_id,
+        title,
+        company,
+        location,
+        from,
+        to,
+        current,
+        description,
     } = req.body;
     const experienceFields = {};
     if (title) experienceFields.title = title;
@@ -263,7 +246,7 @@ router.post(
 );
 
 // @route   POST /api/profile/education
-// @desc    Add and Update education to user profile
+// @desc    Add and Update user education
 // @access  Private
 router.post(
   "/education",

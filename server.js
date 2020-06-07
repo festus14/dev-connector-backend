@@ -13,7 +13,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const uri = require("./config/keys").mongoURILocal;
+const uri = require("./config/keys").mongoURI;
 mongoose
   .connect(uri, {
     useUnifiedTopology: true,

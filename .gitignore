@@ -37,7 +37,7 @@ yarn-error.log
 package-lock.json
 
 ## config
-config
+/config/keys_dev.js
 
 # BUCK
 buck-out/
